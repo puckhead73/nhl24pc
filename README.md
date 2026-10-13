@@ -54,7 +54,9 @@ CPU directly, at native speed. What the emulator provides is everything around i
 
 First run: saves, the profile and the shader cache are created under `user\`. The first minutes stutter
 while the shaders compile; afterwards the game runs at 50–60 fps on a mid-range GPU (Ryzen 5 4500 +
-RTX 5060: 51 fps in play, 30 fps locked in menus and cutscenes, like the console).
+RTX 5060: 51 fps in play). Menus, cutscenes and instant replays are locked to 30 fps on the console;
+a game patch lifts that cap so they run at up to 60 fps. The game patches support v01.00 and the
+v01.60 update.
 
 **Requirements**: Windows 10/11 x64; a Vulkan 1.3 GPU with current drivers (NVIDIA GTX 10xx/RTX,
 AMD RDNA; integrated GPUs are too slow); 8 GB RAM (16 GB recommended); about 40 GB free for the

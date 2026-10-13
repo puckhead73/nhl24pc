@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  NHL 24 (CUSA37933, APP_VER 01.00) - nhlport game patches, loaded by shadPS4's MemoryPatcher
+  NHL 24 (CUSA37933, APP_VER 01.00 and 01.60) - nhlport game patches, loaded by shadPS4's MemoryPatcher
   (run with  shadPS4.exe -p nhl24.xml ; the file is looked up in <user>/patches/).
 
   Addresses are eboot.bin virtual addresses with the 0x400000 base the patch repository uses,
@@ -18,6 +18,30 @@
         one makes the game take its own synchronous path (compress inline, no job, no wait).
       -->
       <Line Type="byte" Address="0x068ACB70" Value="0xEB"/>
+    </PatchList>
+  </Metadata>
+  <Metadata Name="Uncapped menus, cutscenes and replays (60 fps)" isEnabled="true" AppVer="01.00" AppElf="eboot.bin" Author="nhlport">
+    <PatchList>
+      <!--
+        Both sceVideoOutSetFlipRate call sites pass rate = abs(interval) - 1 from the game's frame
+        pacing setting (1 = every second vblank = 30 fps in menus, cutscenes and instant replays).
+        Replace "mov esi, ebx" (89 DE) with "xor esi, esi" (31 F6) so the rate is always 0.
+      -->
+      <Line Type="bytes" Address="0x05E38AAC" Value="31F6"/>
+      <Line Type="bytes" Address="0x05FFD71F" Value="31F6"/>
+    </PatchList>
+  </Metadata>
+  <Metadata Name="Synchronous replay compression (fixes black ice / frozen gameplay)" isEnabled="true" AppVer="01.60" AppElf="eboot.bin" Author="nhlport">
+    <PatchList>
+      <!-- v1.60 location of the same cmp qword ptr [rdi+8], 0 ; je +0x48 (eboot 0x64e0770). -->
+      <Line Type="byte" Address="0x068E0770" Value="0xEB"/>
+    </PatchList>
+  </Metadata>
+  <Metadata Name="Uncapped menus, cutscenes and replays (60 fps)" isEnabled="true" AppVer="01.60" AppElf="eboot.bin" Author="nhlport">
+    <PatchList>
+      <!-- v1.60 sceVideoOutSetFlipRate call sites: mov esi, ebx (89 DE) -> xor esi, esi (31 F6). -->
+      <Line Type="bytes" Address="0x05E65F66" Value="31F6"/>
+      <Line Type="bytes" Address="0x06027699" Value="31F6"/>
     </PatchList>
   </Metadata>
 </Patch>
